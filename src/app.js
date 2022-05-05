@@ -22,8 +22,7 @@ const notify = require('./funcs/notify');
         // 输入账号密码
         await handleLogin(page);
         // 获取pano_id
-        // url: http://127.0.0.1:9010/panoIds
-        const ids = await panoId.getRemoteIds();
+        const ids = await panoId.getRemoteIds(config.remotePanoIdUrl);
 
         // 开始串行处理
         for (let i = 0; i < ids.length; i++) {

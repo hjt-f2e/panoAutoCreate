@@ -1,6 +1,7 @@
 
 const axios = require('axios');
-const ddApi = 'https://oapi.dingtalk.com/robot/send?access_token=a2119e7a6dc937311811736a1001631551ca8c310c958967b081d43b220f6055';
+const config = require('../config');
+const ddApi = config.ddApi;
 
 const panoId = require('./panoId');
 const fs = require('fs');
