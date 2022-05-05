@@ -1,4 +1,6 @@
 node_modules
 
 src/pwd/user.json
+src/logs/*
 src/resultImgs/*
+src/localIDs.json

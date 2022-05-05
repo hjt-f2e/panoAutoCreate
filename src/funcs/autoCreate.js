@@ -3,34 +3,40 @@
  */
 const { sleep } = require('../utils/tools');
 const config = require('../config');
+const panoId = require('./panoId')
 
-async function autoCreate(page, panoId) {
+async function autoCreate(page, id) {
     // 进入生成弹窗
     await sleep();
-    console.log('进入生成弹窗');
-    await page.goto(`${config.HOST}/index.php/member/putout/index/pano_id/${panoId}`)
+    console.log(`-----进入生成弹窗 panoId: ${id}-----`);
+    await page.goto(`${config.HOST}/index.php/member/putout/index/pano_id/${id}`)
     // 进入生成弹窗
 
     // 点击开始生成
     await sleep();
-    console.log('点击开始生成');
-    await page.click('.blackbutton');
-    // TODO:如果这里失败
-    // const msgBoxShow = await page.waitForSelector('.msgbox', {
-    //     timeout: 1000
-    // });
-    // console.log('msgBoxShow', msgBoxShow)
-    const finalResponse = await page.waitForResponse(async response => {
-        return response.url().includes('/do.php') && response.status() === 200;
-    });
-    const finalText = await finalResponse.text();
-    if (finalText.includes('downzip')) {
-        // 成功
+    // 先确定场景数量
+    const sceneCount = await page.$eval('table>tbody>tr:nth-of-type(2)>td:nth-of-type(2)', tr => tr.innerText);
+    if (sceneCount > 0) {
+        console.log(`场景数量: ${sceneCount}，点击开始生成`);
+        await page.click('.blackbutton');
+        const finalResponse = await page.waitForResponse(async response => {
+            return response.url().includes('/do.php') && response.status() === 200;
+        });
+        const finalText = await finalResponse.text();
+        if (finalText.includes('downzip')) {
+            // 生成成功
+            panoId.setSuccess(id);
+        } else {
+            // 生成失败
+            panoId.setDownzipFailed(id);
+        }
     } else {
-        // 失败
+        // 场景数量为0（无权限）
+        console.log('场景数量: 0，无权限');
+        panoId.setNoPermission(id);
     }
-    console.log('生成结束')
-    // 点击开始生成
+    console.log('生成结束');
+    // 进度通知
 }
 
 module.exports = autoCreate;
