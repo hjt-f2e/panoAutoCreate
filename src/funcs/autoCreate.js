@@ -3,9 +3,10 @@
  */
 const { sleep } = require('../utils/tools');
 const config = require('../config');
-const panoId = require('./panoId')
+const panoId = require('./panoId');
+const notify = require('./notify');
 
-async function autoCreate(page, id) {
+async function autoCreate(page, id, index) {
     // 进入生成弹窗
     await sleep();
     console.log(`-----进入生成弹窗 panoId: ${id}-----`);
@@ -35,8 +36,9 @@ async function autoCreate(page, id) {
         console.log('场景数量: 0，无权限');
         panoId.setNoPermission(id);
     }
-    console.log('生成结束');
+    console.log(`生成结束：${index + 1}/${panoId.getAllIds().length}`);
     // 进度通知
+    notify.progress(index + 1, panoId.getAllIds().length);
 }
 
 module.exports = autoCreate;
