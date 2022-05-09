@@ -7,6 +7,13 @@ const panoId = require('./panoId');
 const notify = require('./notify');
 
 async function autoCreate(page, id, index) {
+    // 进入之前判断本地时间，如果是6点以后，就停止了，防止占用服务器资源
+    const nowHours = new Date().getHours();
+    config.notExecTime
+    if (nowHours > config.notExecTime[0] && nowHours < config.notExecTime[1]) {
+        // 跳出
+        throw new Error(`不在执行的时间范围内，最后终止ID：${id}(未执行)`);
+    }
     // 进入生成弹窗
     await sleep();
     console.log(`-----进入生成弹窗 panoId: ${id}-----`);

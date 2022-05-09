@@ -5,6 +5,7 @@ const config = {
     remotePanoIdUrl: 'https://staging-pano-admin.huanjutang.com/index.php/member/ajaxIn/panoids',
     // 钉钉机器人webhook地址
     ddApi: 'https://oapi.dingtalk.com/robot/send?access_token=f067e1707d42d2bea89a1febda9bd1cf9faf984d046cc69b2f68b768f827dc08',
+    notExecTime: [6, 23], // 6点至23点不能执行
 }
 
 module.exports = config;
