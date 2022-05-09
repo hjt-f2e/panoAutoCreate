@@ -13,6 +13,8 @@ const successIds = [];
 const downzipFailedIds = [];
 // 没有权限的ID
 const noPermissionIds = [];
+// 超时的ID
+const timeoutIds = [];
 
 const panoId = {
     // 获取panoId
@@ -53,6 +55,12 @@ const panoId = {
     },
     setNoPermission(id) {
         noPermissionIds.push(id);
+    },
+    getTimeoutIds() {
+        return timeoutIds;
+    },
+    setTimeoutIds(id) {
+        timeoutIds.push(id);
     }
 }
 

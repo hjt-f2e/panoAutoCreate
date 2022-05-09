@@ -20,16 +20,25 @@ async function autoCreate(page, id, index) {
     if (sceneCount > 0) {
         console.log(`场景数量: ${sceneCount}，点击开始生成`);
         await page.click('.blackbutton');
-        const finalResponse = await page.waitForResponse(async response => {
-            return response.url().includes('/do.php') && response.status() === 200;
-        });
-        const finalText = await finalResponse.text();
-        if (finalText.includes('downzip')) {
-            // 生成成功
-            panoId.setSuccess(id);
-        } else {
-            // 生成失败
-            panoId.setDownzipFailed(id);
+        try {
+            const finalResponse = await page.waitForResponse(async response => {
+                return response.url().includes('/do.php') && response.status() === 200;
+            }, {
+                timeout: 50000 // 超时5分钟
+            });
+
+            const finalText = await finalResponse.text();
+            if (finalText.includes('downzip')) {
+                // 生成成功
+                panoId.setSuccess(id);
+            } else {
+                // 生成失败
+                panoId.setDownzipFailed(id);
+            }
+        } catch (_) {
+            // 可能超时了
+            // 进行记录
+            panoId.setTimeoutIds(id);
         }
     } else {
         // 场景数量为0（无权限）

@@ -25,6 +25,7 @@ function createSumerise() {
     str += `- 成功：${panoId.getSuccess().length} \n`
     str += `- 生成失败：${panoId.getDownzipFailed().length} \n`
     str += `- 无权限：${panoId.getNoPermission().length} \n`
+    str += `- 超时：${panoId.getTimeoutIds().length} \n`
     return str;
 }
 
@@ -34,12 +35,14 @@ function handlePrintLog() {
     const success = panoId.getSuccess();
     const failed = panoId.getDownzipFailed();
     const noPermission = panoId.getNoPermission();
+    const timeout = panoId.getTimeoutIds();
 
     fs.writeFileSync(path.join(__dirname, `../logs/${new Date().getTime()}.json`), JSON.stringify({
         all,
         success,
         failed,
-        noPermission
+        noPermission,
+        timeout
     }, '', 4));
 }
 
