@@ -10,7 +10,12 @@ async function autoCreate(page, id, index) {
     // 进入生成弹窗
     await sleep();
     console.log(`-----进入生成弹窗 panoId: ${id}-----`);
-    await page.goto(`${config.HOST}/index.php/member/putout/index/pano_id/${id}`)
+    try {
+        await page.goto(`${config.HOST}/index.php/member/putout/index/pano_id/${id}`)
+    } catch (_) {
+        // 可能跳转失败了，直接放入生成失败的数组
+        panoId.setDownzipFailed(id);
+    }
     // 进入生成弹窗
 
     // 点击开始生成

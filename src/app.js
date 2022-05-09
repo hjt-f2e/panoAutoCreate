@@ -10,7 +10,7 @@ const notify = require('./funcs/notify');
     let startTime = 0;
 
     const browser = await puppeteer.launch({
-        headless: true, // 是否显示浏览器
+        headless: true, // 是否不显示浏览器
         defaultViewport: {
             width: 800,
             height: 600
