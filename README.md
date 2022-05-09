@@ -23,6 +23,7 @@ const config = {
     remotePanoIdUrl: '',
     // 钉钉机器人webhook地址
     ddApi: 'https://oapi.dingtalk.com/robot/send?access_token=a2119e7a6dc937311811736a1001631551ca8c310c958967b081d43b220f6055',
+    notExecTime: [6, 23], // 6点至23点不能执行
 }
 ```
 
