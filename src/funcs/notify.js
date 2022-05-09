@@ -94,13 +94,13 @@ const notify = {
             str += ` ## 任务进行中... \n`
             const len = Math.ceil(total / step);
             if (cur === len * 1) {
-                str += `- 完成进度：25%(${cur}/${total})`
+                str += `- 完成进度：${(cur/total * 100).toFixed(2)}%(${cur}/${total})`
                 reportToDD(str);
             } else if (cur === len * 2) {
-                str += `- 完成进度：50%(${cur}/${total})`
+                str += `- 完成进度：${(cur/total * 100).toFixed(2)}%(${cur}/${total})`
                 reportToDD(str);
             } else if (cur === len * 3) {
-                str += `- 完成进度：75%(${cur}/${total})`
+                str += `- 完成进度：${(cur/total * 100).toFixed(2)}%(${cur}/${total})`
                 reportToDD(str);
             }
         }
