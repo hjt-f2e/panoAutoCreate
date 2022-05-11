@@ -4,10 +4,10 @@ const panoId = require('./funcs/panoId');
 const autoCreate = require('./funcs/autoCreate');
 const config = require('./config');
 const notify = require('./funcs/notify');
+let startTime = 0;
 
 (async () => {
 
-    let startTime = 0;
 
     const browser = await puppeteer.launch({
         headless: true, // 是否不显示浏览器
@@ -47,3 +47,13 @@ const notify = require('./funcs/notify');
         browser.close();
     }
 })();
+
+process.on('uncaughtException', (err, origin) => {
+    const errMsg = `uncaughtException 全局异常\n捕获的异常：${err}\n异常的来源：${origin}`;
+    notify.error(errMsg, startTime);
+});
+
+process.on('unhandledRejection', (err, origin) => {
+    const errMsg = `unhandledRejection Promise未绑定异常\n捕获的异常：${err}\n异常的来源：${origin}`;
+    notify.error(errMsg, startTime);
+});

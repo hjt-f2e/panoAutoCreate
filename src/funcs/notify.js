@@ -79,7 +79,6 @@ const notify = {
         handlePrintLog()
     },
     error(err, startTime) {
-        console.log(err)
         let str = ''
         str += `## 任务出错 \n`
         str += `${createSumerise()}`
@@ -112,7 +111,7 @@ const notify = {
         let str = '## 任务开始 \n'
         str += `- 总共：${panoId.getAllIds().length} \n`
         reportToDD(str);
-    }
+    },
 }
 
 module.exports = notify;
